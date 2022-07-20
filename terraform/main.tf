@@ -5,14 +5,22 @@
 //
 //
 
-
-provider "aws" {
-region = "us-east-1"
-access_key = "Put Access Key Here"
-secret_key = "Put Secret Key Here"
-}
+# creditials saved in terraform-provider.tf
+# and ignored in github
+#
+# provider "aws" {
+# region = var.aws_region
+# access_key = "Put Access Key Here"
+# secret_key = "Put Secret Key Here"
+# }
 
 variable "labname" {
   type = string
   default = "friday-lab-test"
+}
+
+variable "aws_region" {
+  description = "AWS region"
+  type        = string
+  default     = "us-west-2"
 }

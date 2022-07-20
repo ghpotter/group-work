@@ -1,7 +1,3 @@
-variable "region" {
-    default = "us-west-1"
-}
-
 data "aws_availability_zones" "available" {}
 
 locals {
