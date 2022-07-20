@@ -1,13 +1,11 @@
-//
-// Tristan S
-//
-// Lab 3 Friday
-//
-//
+/*
+  Terraform files by Tristan S and Gregory P
+*/
 
-# creditials saved in terraform-provider.tf
-# and ignored in github
-#
+/*
+creditials saved in terraform-provider.tf and ignored in github
+*/
+
 # provider "aws" {
 # region = var.aws_region
 # access_key = "Put Access Key Here"
