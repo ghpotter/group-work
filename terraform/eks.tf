@@ -12,7 +12,8 @@ module "eks" {
     version = "~> 18.0"
     cluster_name = local.cluster_name
     cluster_version = "1.22"
-    subnets = module.vpc.public_subnets
+    vpc_id = module.vpc.vpc_id
+    subnet_ids = module.vpc.public_subnets
 
     tags = {
         Name = "Friday-Lab-EKS-Cluster"
@@ -20,18 +21,15 @@ module "eks" {
 
     eks_managed_node_group_defaults = {
         instance_types = ["t2.micro"]
+
+        desired_size = 2
+        min_size     = 2
+        max_size     = 2
     }
 
     eks_managed_node_groups = {
         default_node_group = {
-            disk_size = 8
         }
-    }
-
-    complete = {
-        min_size     = 2
-        max_size     = 2
-        desired_size = 2
     }
 }
 
