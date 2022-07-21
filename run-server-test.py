@@ -1,4 +1,13 @@
 
+#
+# This can be used to test the python application within jenkins
+# There are notable issues attempting to import 3rd parthy libraries
+# in to python when called from jenkins so this uses socket as a native library
+#
+# This tests the connection of the running docker containers application to verify
+# that is is online and working
+#
+#
 
 import socket
 
