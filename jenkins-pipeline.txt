@@ -1,4 +1,3 @@
-
 pipeline {
       environment {
 
@@ -25,8 +24,8 @@ pipeline {
                 // Set the directory for terraform to use for running
                 dir("${terraformDirectory}") {
                 echo 'Preparing the Infrastructure ....'
-                bat "\"terraform\" init"
-                bat "\"terraform\" plan -out=plan1"
+                sh "\"terraform\" init"
+                sh "\"terraform\" plan -out=plan1"
                 }
             }
 
@@ -34,17 +33,17 @@ pipeline {
         stage('Test') {
             steps {
 
-            echo 'Beginning Testing....'
+            echo 'Testing....'
 
             // Run the docker container
-            bat "docker run -d -p 8081:80 ${dockerImage}"
+            //sh "docker run -d -p 8081:80 ${dockerImage}"
 
             // A simple test using inline python to show how a test can be done
             // output can be handled later and the pipeline can be haulted if the tests fail
-            bat "python \"${buildDirectory}/run-server-test.py\""
+            //sh "python \"${buildDirectory}/run-server-test.py\""
 
             // Kill the docker container
-            bat "\"${buildDirectory}/stop-container.bat\""
+            //sh "\"${buildDirectory}/stop-container.bat\""
             }
         }
         stage('Deploy') {
@@ -55,9 +54,8 @@ pipeline {
                 // Set the directory for terraform
                 dir("${terraformDirectory}") {
                 echo 'Creating Terraform Infastructure ....'
-                bat "terraform apply --auto-approve"
+                sh "terraform apply --auto-approve"
                 }
-
 
                 // Need to push docker image to kubernetes cluster
 
