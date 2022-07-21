@@ -7,11 +7,7 @@ pipeline {
 
           terraformDirectory = "${rootProjectDirectory}/terraform";
 
-          terraformpath = "C:\\Program Files (x86)\\Terraform\\";
-
           dockerImage = "http-py-server" // docker image name
-
-          ectURL = "849482604442.dkr.ecr.us-east-1.amazonaws.com/test-repository-for-jenkins"; // repository to push the container to
 
     }
     agent any
@@ -24,8 +20,8 @@ pipeline {
                 // Set the directory for terraform to use for running
                 dir("${terraformDirectory}") {
                 echo 'Preparing the Infrastructure ....'
-                sh "\"terraform\" init"
-                sh "\"terraform\" plan -out=plan1"
+                sh "terraform init"
+                sh "terraform plan -out=plan1"
                 }
             }
 
@@ -35,15 +31,6 @@ pipeline {
 
             echo 'Testing....'
 
-            // Run the docker container
-            //sh "docker run -d -p 8081:80 ${dockerImage}"
-
-            // A simple test using inline python to show how a test can be done
-            // output can be handled later and the pipeline can be haulted if the tests fail
-            //sh "python \"${buildDirectory}/run-server-test.py\""
-
-            // Kill the docker container
-            //sh "\"${buildDirectory}/stop-container.bat\""
             }
         }
         stage('Deploy') {
