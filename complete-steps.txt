@@ -1,0 +1,38 @@
+1a) create dockerfile with the app to build\test\run
+ - write Dockerfile
+ - publish to dockerhub, or save to run on jenkins controller
+
+1b) manually terraform environment
+ - create ec2 instance (or locally)
+ - install terraform
+ - 'sudo yum install -y yum-utils'
+ - 'sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo'
+ - 'sudo yum -y install terraform'
+ - install git
+ - run 'sudo yum install git -y'
+ - copy tf files
+ - run 'terraform plan'
+ - run 'terrafrom init'
+ - run 'terraform apply'
+
+2) install jenkins on cluster
+ - Write Dockerfile to install jenkins on cluster
+ - Write deployment.yml for jenkins deployment on cluster
+ - run 'kubectl create -f [jenkins-deployment.yaml] -n jenkins' where [ins-deployment.yaml] is name of your deployment.yml from the previous step
+ - validate jenkins is running and get port info: 'kubectl get services -n jenkins'
+ - get ip of minikube: minikube ip
+ - get pod name from: kubectl get pods -n jenkins
+ - get password from: kubectl logs [pod_name] -n jenkins -OR- in /var/jenkins_home/secrets/initialAdminPassword
+ - access jenkins on a browers with ip and port from previous steps
+ - add 'docker pipeline' plugin via GUI
+ - get cluster info url: 'kubectl cluster-info'
+ - get Jenkins pod id: kubectl get pods -n jenkins | grep jenkins
+ - get pod IP in output from: kubectl describe pod -n jenkins [pod-id]
+ - Configure Kubernetes plugin
+ - Manage Jenkins -> Managee Node and Clouds -> Configure Clouds -> Add a new cloud -> Kubernetes
+ - Add Kubernetes URL and Jenkins URL (These will be the same URL and port)
+ - Also in Pod Template section, add image (aka Dockerfile) requirements. Must add Name, and Namespace.
+
+3) create build\test\deploy pipeline in Jenkins
+
+
