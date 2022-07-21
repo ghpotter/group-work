@@ -20,7 +20,7 @@ module "eks" {
     }
 
     eks_managed_node_group_defaults = {
-        instance_types = ["t2.micro"]
+        instance_types = ["t2.medium"]
 
         desired_size = 2
         min_size     = 2
