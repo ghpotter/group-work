@@ -32,7 +32,7 @@ pipeline {
               echo 'Testing....'
 
             // Testing components have been added
-            // these test commands must use sudo or run as root
+            // these test commands must use sudo or run as root 
 
             // Starting the container for testing
             // sh "docker run -d -p 8081:80 ${dockerImage}"
