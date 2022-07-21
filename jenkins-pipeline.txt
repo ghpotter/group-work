@@ -29,7 +29,21 @@ pipeline {
         stage('Test') {
             steps {
 
-            echo 'Testing....'
+              echo 'Testing....'
+
+            // Testing components have been added
+            // these test commands must use sudo or run as root
+
+            // Starting the container for testing
+            // sh "docker run -d -p 8081:80 ${dockerImage}"
+
+            // A simple test using inline python to show how a test can be done
+            // output can be handled later and the pipeline can be haulted if the tests fail
+            // sh "python \"${buildDirectory}/run-server-test.py\""
+
+            // stopping the container after testing
+            // sh "docker stop $(docker ps -a -q)"
+            // sh "docker rm $(docker ps -a -q)"
 
             }
         }
