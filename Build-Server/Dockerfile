@@ -1,5 +1,5 @@
 # use a node base image
-FROM python:2.7
+FROM python:3
 
 COPY microhttp.py ./app/
 WORKDIR /app
