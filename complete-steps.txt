@@ -51,20 +51,16 @@ sudo nano  /var/lib/jenkins/secrets/initialAdminPassword
 
 #               Install kubectl on to the EC2
 
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-
-sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-
-export PATH=/usr/local/bin:$PATH
-
-
 # You need to run the below aws cli command first to authenticate it.
 # Make sure to specify the correct cluster name and the region
 
 aws eks --region us-east-1 update-kubeconfig --name Cluster-Name
 
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
+export PATH=/usr/local/bin:$PATH
 
 
 Then log in to docker and install the docker and docker pipeline plugins

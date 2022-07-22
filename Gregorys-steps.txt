@@ -1,0 +1,71 @@
+1a) create dockerfile with the app to build\test\run
+ - write Dockerfile
+ - publish to dockerhub, or save to run on jenkins controller
+
+1b) manually terraform environment
+ - create ec2 instance (or locally)
+ - install terraform
+ - 'sudo yum install -y yum-utils'
+ - 'sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo'
+ - 'sudo yum -y install terraform'
+ - install git
+ - run 'sudo yum install git -y'
+ - copy tf files
+ - run 'terraform plan'
+ - run 'terrafrom init'
+ - run 'terraform apply'
+
+2) install and set-up jenkins on cluster
+ - Write deployment.yml for jenkins deployment on cluster
+ - From the controller node do the following:
+sudo su
+apt-get update
+apt-get install docker.io -y
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+apt-add-repository 'deb http://apt.kubernetes.io/ kubernetes-xenial main'
+apt-get update
+apt-get install -y kubelet kubeadm kubectl
+sudo hostnamectl set-hostname $(curl http://169.254.169.254/latest/meta-data/hostname)
+printf '[Service]\nEnvironment="KUBELET_EXTRA_ARGS=--node-ip=10.0.0.11"' | sudo tee /etc/systemd/system/kubelet.service.d/20-aws.conf
+systemctl daemon-reload
+systemctl restart kubelet
+kubeadm init --token-ttl 0
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+kubectl apply -f https://raw.githubusercontent.com/aws/amazon-vpc-cni-k8s/master/config/master/aws-k8s-cni.yaml
+ - From the agent node do the following 
+sudo su
+apt-get update
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+apt-add-repository 'deb http://apt.kubernetes.io/ kubernetes-xenial main'
+apt-get update
+apt-get install -y kubelet kubeadm kubectl
+sudo hostnamectl set-hostname $(curl http://169.254.169.254/latest/meta-data/hostname)
+printf '[Service]\nEnvironment="KUBELET_EXTRA_ARGS=--node-ip=10.0.0.11"' | sudo tee /etc/systemd/system/kubelet.service.d/20-aws.conf
+systemctl daemon-reload
+systemctl restart kubelet
+apt install docker.io -y
+ - run kubeadm join with information from the controller
+ - back to controller
+kubectl create -f deployment.yml
+
+*Gregory got stuck here*
+* following are the proposed steps of what should follow *
+
+ - validate jenkins is running and get port info: 'kubectl get services -n jenkins'
+ - get pod name from: kubectl get pods -n jenkins
+ - get password from: kubectl logs [pod_name] -n jenkins -OR- in /var/jenkins_home/secrets/initialAdminPassword
+ - access jenkins on a browers with ip and port from previous steps
+ - add 'docker pipeline' plugin via GUI
+ - get cluster info url: 'kubectl cluster-info'
+ - get Jenkins pod id: kubectl get pods -n jenkins | grep jenkins
+ - get pod IP in output from: kubectl describe pod -n jenkins [pod-id]
+ - Configure Kubernetes plugin
+ - Manage Jenkins -> Manage Node and Clouds -> Configure Clouds -> Add a new cloud -> Kubernetes
+ - Add Kubernetes URL and Jenkins URL (These will be the same URL and port)
+ - Also in Pod Template section, add image (aka Dockerfile) requirements. Must add Name, and Namespace.
+
+3) create build\test\deploy pipeline in Jenkins
+
+

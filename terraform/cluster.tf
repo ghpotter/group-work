@@ -1,5 +1,5 @@
 resource "aws_launch_configuration" "ecs_launch_config" {
-    image_id                    = "ami-0cff7528ff583bf9a"
+    image_id                    = "ami-052efd3df9dad4825"
     iam_instance_profile        = aws_iam_instance_profile.ecs_agent.name
     security_groups             = [aws_security_group.terraform_access.id]
     user_data                   = "#!/bin/bash\necho ECS_CLUSTER=my-cluster >> /etc/ecs/ecs.config"

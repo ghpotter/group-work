@@ -1,0 +1,224 @@
+root@ip-10-0-0-168:/home/ubuntu# kubectl describe pod jenkins-7b586bdbcd-5228r
+Name:         jenkins-7b586bdbcd-5228r
+Namespace:    default
+Priority:     0
+Node:         ip-10-0-1-100.ec2.internal/
+Start Time:   Fri, 22 Jul 2022 16:52:38 +0000
+Labels:       app=jenkins
+              pod-template-hash=7b586bdbcd
+Annotations:  cni.projectcalico.org/containerID: d72a14ecb1766a81c5a112df5db891ec213d5853358a7231055ca20ecbd4d827
+              cni.projectcalico.org/podIP: 192.168.48.159/32
+              cni.projectcalico.org/podIPs: 192.168.48.159/32
+Status:       Running
+IP:           192.168.48.159
+IPs:
+  IP:           192.168.48.159
+Controlled By:  ReplicaSet/jenkins-7b586bdbcd
+Containers:
+  jenkins:
+    Container ID:   containerd://dbb556629caa6bcef621b52f2cf56091af311d664c2900469dd0511934d58dee
+    Image:          jenkins/jenkins:lts-jdk11
+    Image ID:       docker.io/jenkins/jenkins@sha256:c878e1aac1f5152a6234b33a10542c7f694b7c5c37de27191d1c173800853b93
+    Port:           8080/TCP
+    Host Port:      0/TCP
+    State:          Waiting
+      Reason:       CrashLoopBackOff
+    Last State:     Terminated
+      Reason:       Error
+      Exit Code:    143
+      Started:      Fri, 22 Jul 2022 17:14:58 +0000
+      Finished:     Fri, 22 Jul 2022 17:17:46 +0000
+    Ready:          False
+    Restart Count:  7
+    Environment:    <none>
+    Mounts:
+      /var/jenkins_home from jenkins-home (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-jdgj8 (ro)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             False
+  ContainersReady   False
+  PodScheduled      True
+Volumes:
+  jenkins-home:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:
+    SizeLimit:  <unset>
+  kube-api-access-jdgj8:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason                  Age                   From               Message
+  ----     ------                  ----                  ----               -------
+  Warning  FailedScheduling        38m                   default-scheduler  0/2 nodes are available: 1 node(s) had untolerated taint {node-role.kubernetes.io/master: }, 1 node(s) had untolerated taint {node.kubernetes.io/not-ready: }. preemption: 0/2 nodes are available: 2 Preemption is not helpful for scheduling.
+  Warning  FailedScheduling        28m                   default-scheduler  0/2 nodes are available: 1 node(s) had untolerated taint {node-role.kubernetes.io/master: }, 1 node(s) had untolerated taint {node.kubernetes.io/not-ready: }. preemption: 0/2 nodes are available: 2 Preemption is not helpful for scheduling.
+  Normal   Scheduled               27m                   default-scheduler  Successfully assigned default/jenkins-7b586bdbcd-5228r to ip-10-0-1-100.ec2.internal
+  Warning  FailedCreatePodSandBox  27m                   kubelet            Failed to create pod sandbox: rpc error: code = Unknown desc = failed to setup network for sandbox "e2057cba25eef2e6f632ad4c864ebe8389986cdf5acbb154893a0307b9001c78": stat /var/lib/calico/nodename: no such file or directory: check that the calico/node container is running and has mounted /var/lib/calico/
+  Normal   Pulling                 27m                   kubelet            Pulling image "jenkins/jenkins:lts-jdk11"
+  Normal   Pulled                  27m                   kubelet            Successfully pulled image "jenkins/jenkins:lts-jdk11" in 10.523129756s
+  Normal   Started                 23m (x3 over 27m)     kubelet            Started container jenkins
+  Normal   Created                 19m (x4 over 27m)     kubelet            Created container jenkins
+  Normal   SandboxChanged          19m (x7 over 27m)     kubelet            Pod sandbox changed, it will be killed and re-created.
+  Normal   Pulled                  19m (x3 over 27m)     kubelet            Container image "jenkins/jenkins:lts-jdk11" already present on machine
+  Warning  BackOff                 7m39s (x40 over 23m)  kubelet            Back-off restarting failed container
+  Normal   Killing                 2m45s (x8 over 27m)   kubelet            Stopping container jenkins
+
+
+
+root@ip-10-0-0-168:/home/ubuntu# kubectl describe node ip-10-0-0-168.ec2.internal
+Name:               ip-10-0-0-168.ec2.internal
+Roles:              control-plane
+Labels:             beta.kubernetes.io/arch=amd64
+                    beta.kubernetes.io/os=linux
+                    kubernetes.io/arch=amd64
+                    kubernetes.io/hostname=ip-10-0-0-168.ec2.internal
+                    kubernetes.io/os=linux
+                    node-role.kubernetes.io/control-plane=
+                    node.kubernetes.io/exclude-from-external-load-balancers=
+Annotations:        kubeadm.alpha.kubernetes.io/cri-socket: unix:///var/run/containerd/containerd.sock
+                    node.alpha.kubernetes.io/ttl: 0
+                    projectcalico.org/IPv4Address: 10.0.0.168/24
+                    projectcalico.org/IPv4IPIPTunnelAddr: 192.168.99.0
+                    volumes.kubernetes.io/controller-managed-attach-detach: true
+CreationTimestamp:  Fri, 22 Jul 2022 16:19:46 +0000
+Taints:             node-role.kubernetes.io/control-plane:NoSchedule
+                    node-role.kubernetes.io/master:NoSchedule
+Unschedulable:      false
+Lease:
+  HolderIdentity:  ip-10-0-0-168.ec2.internal
+  AcquireTime:     <unset>
+  RenewTime:       Fri, 22 Jul 2022 17:25:21 +0000
+Conditions:
+  Type                 Status  LastHeartbeatTime                 LastTransitionTime                Reason                       Message
+  ----                 ------  -----------------                 ------------------                ------                       -------
+  NetworkUnavailable   False   Fri, 22 Jul 2022 17:24:31 +0000   Fri, 22 Jul 2022 17:24:31 +0000   CalicoIsUp                   Calico is running on this node
+  MemoryPressure       False   Fri, 22 Jul 2022 17:24:35 +0000   Fri, 22 Jul 2022 16:19:43 +0000   KubeletHasSufficientMemory   kubelet has sufficient memory available
+  DiskPressure         False   Fri, 22 Jul 2022 17:24:35 +0000   Fri, 22 Jul 2022 16:19:43 +0000   KubeletHasNoDiskPressure     kubelet has no disk pressure
+  PIDPressure          False   Fri, 22 Jul 2022 17:24:35 +0000   Fri, 22 Jul 2022 16:19:43 +0000   KubeletHasSufficientPID      kubelet has sufficient PID available
+  Ready                True    Fri, 22 Jul 2022 17:24:35 +0000   Fri, 22 Jul 2022 16:52:41 +0000   KubeletReady                 kubelet is posting ready status. AppArmor enabled
+Addresses:
+Capacity:
+  cpu:                2
+  ephemeral-storage:  7950756Ki
+  hugepages-2Mi:      0
+  memory:             4016824Ki
+  pods:               110
+Allocatable:
+  cpu:                2
+  ephemeral-storage:  7327416718
+  hugepages-2Mi:      0
+  memory:             3914424Ki
+  pods:               110
+System Info:
+  Machine ID:                 e567a1685e4b4cab8199dd430fc37091
+  System UUID:                ec247983-2d59-baa3-2653-123b3a450d54
+  Boot ID:                    c8314918-ece8-4924-8d01-e0b371ec28d5
+  Kernel Version:             5.15.0-1011-aws
+  OS Image:                   Ubuntu 22.04 LTS
+  Operating System:           linux
+  Architecture:               amd64
+  Container Runtime Version:  containerd://1.5.9-0ubuntu3
+  Kubelet Version:            v1.24.3
+  Kube-Proxy Version:         v1.24.3
+Non-terminated Pods:          (8 in total)
+  Namespace                   Name                                                  CPU Requests  CPU Limits  Memory Requests  Memory Limits  Age
+  ---------                   ----                                                  ------------  ----------  ---------------  -------------  ---
+  kube-flannel                kube-flannel-ds-8mf8s                                 100m (5%)     100m (5%)   50Mi (1%)        50Mi (1%)      31m
+  kube-system                 aws-node-46gsw                                        10m (0%)      0 (0%)      0 (0%)           0 (0%)         62m
+  kube-system                 calico-node-hjxgr                                     250m (12%)    0 (0%)      0 (0%)           0 (0%)         33m
+  kube-system                 etcd-ip-10-0-0-168.ec2.internal                       100m (5%)     0 (0%)      100Mi (2%)       0 (0%)         64m
+  kube-system                 kube-apiserver-ip-10-0-0-168.ec2.internal             250m (12%)    0 (0%)      0 (0%)           0 (0%)         65m
+  kube-system                 kube-controller-manager-ip-10-0-0-168.ec2.internal    200m (10%)    0 (0%)      0 (0%)           0 (0%)         63m
+  kube-system                 kube-proxy-z2bxz                                      0 (0%)        0 (0%)      0 (0%)           0 (0%)         64m
+  kube-system                 kube-scheduler-ip-10-0-0-168.ec2.internal             100m (5%)     0 (0%)      0 (0%)           0 (0%)         64m
+Allocated resources:
+  (Total limits may be over 100 percent, i.e., overcommitted.)
+  Resource           Requests     Limits
+  --------           --------     ------
+  cpu                1010m (50%)  100m (5%)
+  memory             150Mi (3%)   50Mi (1%)
+  ephemeral-storage  0 (0%)       0 (0%)
+  hugepages-2Mi      0 (0%)       0 (0%)
+Events:
+  Type     Reason                   Age                  From             Message
+  ----     ------                   ----                 ----             -------
+  Normal   Starting                 64m                  kube-proxy
+  Normal   Starting                 5m4s                 kube-proxy
+  Normal   Starting                 6m3s                 kube-proxy
+  Normal   Starting                 6m56s                kube-proxy
+  Normal   Starting                 56s                  kube-proxy
+  Normal   Starting                 11m                  kube-proxy
+  Normal   Starting                 15m                  kube-proxy
+  Normal   Starting                 18m                  kube-proxy
+  Normal   Starting                 20m                  kube-proxy
+  Normal   Starting                 59m                  kube-proxy
+  Normal   Starting                 20m                  kube-proxy
+  Normal   Starting                 20m                  kube-proxy
+  Normal   Starting                 28m                  kube-proxy
+  Normal   Starting                 30m                  kube-proxy
+  Normal   Starting                 32m                  kube-proxy
+  Normal   Starting                 41m                  kube-proxy
+  Normal   Starting                 62m                  kube-proxy
+  Normal   Starting                 64m                  kube-proxy
+  Normal   Starting                 45m                  kube-proxy
+  Normal   Starting                 64m                  kube-proxy
+  Normal   Starting                 49m                  kube-proxy
+  Normal   Starting                 48m                  kube-proxy
+  Normal   NodeHasNoDiskPressure    65m (x4 over 65m)    kubelet          Node ip-10-0-0-168.ec2.internal status is now: NodeHasNoDiskPressure
+  Normal   NodeHasSufficientMemory  65m (x5 over 65m)    kubelet          Node ip-10-0-0-168.ec2.internal status is now: NodeHasSufficientMemory
+  Normal   NodeHasSufficientPID     65m (x4 over 65m)    kubelet          Node ip-10-0-0-168.ec2.internal status is now: NodeHasSufficientPID
+  Warning  InvalidDiskCapacity      65m                  kubelet          invalid capacity 0 on image filesystem
+  Normal   Starting                 65m                  kubelet          Starting kubelet.
+  Normal   NodeHasSufficientMemory  65m                  kubelet          Node ip-10-0-0-168.ec2.internal status is now: NodeHasSufficientMemory
+  Normal   NodeHasNoDiskPressure    65m                  kubelet          Node ip-10-0-0-168.ec2.internal status is now: NodeHasNoDiskPressure
+  Normal   NodeHasSufficientPID     65m                  kubelet          Node ip-10-0-0-168.ec2.internal status is now: NodeHasSufficientPID
+  Normal   NodeAllocatableEnforced  65m                  kubelet          Updated Node Allocatable limit across pods
+  Normal   RegisteredNode           64m                  node-controller  Node ip-10-0-0-168.ec2.internal event: Registered Node ip-10-0-0-168.ec2.internal in Controller
+  Normal   RegisteredNode           62m                  node-controller  Node ip-10-0-0-168.ec2.internal event: Registered Node ip-10-0-0-168.ec2.internal in Controller
+  Normal   RegisteredNode           59m                  node-controller  Node ip-10-0-0-168.ec2.internal event: Registered Node ip-10-0-0-168.ec2.internal in Controller
+  Normal   NodeHasSufficientPID     49m (x7 over 49m)    kubelet          Node ip-10-0-0-168.ec2.internal status is now: NodeHasSufficientPID
+  Normal   NodeAllocatableEnforced  49m                  kubelet          Updated Node Allocatable limit across pods
+  Warning  InvalidDiskCapacity      49m                  kubelet          invalid capacity 0 on image filesystem
+  Normal   Starting                 49m                  kubelet          Starting kubelet.
+  Normal   NodeHasNoDiskPressure    49m (x7 over 49m)    kubelet          Node ip-10-0-0-168.ec2.internal status is now: NodeHasNoDiskPressure
+  Normal   NodeHasSufficientMemory  49m (x8 over 49m)    kubelet          Node ip-10-0-0-168.ec2.internal status is now: NodeHasSufficientMemory
+  Normal   RegisteredNode           49m                  node-controller  Node ip-10-0-0-168.ec2.internal event: Registered Node ip-10-0-0-168.ec2.internal in Controller
+  Normal   RegisteredNode           48m                  node-controller  Node ip-10-0-0-168.ec2.internal event: Registered Node ip-10-0-0-168.ec2.internal in Controller
+  Normal   RegisteredNode           45m                  node-controller  Node ip-10-0-0-168.ec2.internal event: Registered Node ip-10-0-0-168.ec2.internal in Controller
+  Normal   RegisteredNode           40m                  node-controller  Node ip-10-0-0-168.ec2.internal event: Registered Node ip-10-0-0-168.ec2.internal in Controller
+  Normal   Starting                 35m                  kubelet          Starting kubelet.
+  Normal   NodeHasNoDiskPressure    35m                  kubelet          Node ip-10-0-0-168.ec2.internal status is now: NodeHasNoDiskPressure
+  Normal   NodeHasSufficientPID     35m                  kubelet          Node ip-10-0-0-168.ec2.internal status is now: NodeHasSufficientPID
+  Normal   NodeAllocatableEnforced  35m                  kubelet          Updated Node Allocatable limit across pods
+  Normal   NodeHasSufficientMemory  35m                  kubelet          Node ip-10-0-0-168.ec2.internal status is now: NodeHasSufficientMemory
+  Warning  InvalidDiskCapacity      35m                  kubelet          invalid capacity 0 on image filesystem
+  Normal   RegisteredNode           33m                  node-controller  Node ip-10-0-0-168.ec2.internal event: Registered Node ip-10-0-0-168.ec2.internal in Controller
+  Normal   NodeReady                32m                  kubelet          Node ip-10-0-0-168.ec2.internal status is now: NodeReady
+  Normal   RegisteredNode           30m                  node-controller  Node ip-10-0-0-168.ec2.internal event: Registered Node ip-10-0-0-168.ec2.internal in Controller
+  Warning  InvalidDiskCapacity      20m                  kubelet          invalid capacity 0 on image filesystem
+  Normal   Starting                 20m                  kubelet          Starting kubelet.
+  Normal   NodeHasSufficientPID     20m (x7 over 20m)    kubelet          Node ip-10-0-0-168.ec2.internal status is now: NodeHasSufficientPID
+  Normal   NodeAllocatableEnforced  20m                  kubelet          Updated Node Allocatable limit across pods
+  Normal   NodeHasSufficientMemory  20m (x8 over 20m)    kubelet          Node ip-10-0-0-168.ec2.internal status is now: NodeHasSufficientMemory
+  Normal   NodeHasNoDiskPressure    20m (x7 over 20m)    kubelet          Node ip-10-0-0-168.ec2.internal status is now: NodeHasNoDiskPressure
+  Normal   RegisteredNode           20m                  node-controller  Node ip-10-0-0-168.ec2.internal event: Registered Node ip-10-0-0-168.ec2.internal in Controller
+  Normal   RegisteredNode           15m                  node-controller  Node ip-10-0-0-168.ec2.internal event: Registered Node ip-10-0-0-168.ec2.internal in Controller
+  Normal   RegisteredNode           9m59s                node-controller  Node ip-10-0-0-168.ec2.internal event: Registered Node ip-10-0-0-168.ec2.internal in Controller
+  Normal   NodeAllocatableEnforced  7m4s                 kubelet          Updated Node Allocatable limit across pods
+  Warning  InvalidDiskCapacity      7m4s                 kubelet          invalid capacity 0 on image filesystem
+  Normal   Starting                 7m4s                 kubelet          Starting kubelet.
+  Normal   NodeHasSufficientPID     7m4s (x7 over 7m4s)  kubelet          Node ip-10-0-0-168.ec2.internal status is now: NodeHasSufficientPID
+  Normal   NodeHasSufficientMemory  7m4s (x8 over 7m4s)  kubelet          Node ip-10-0-0-168.ec2.internal status is now: NodeHasSufficientMemory
+  Normal   NodeHasNoDiskPressure    7m4s (x7 over 7m4s)  kubelet          Node ip-10-0-0-168.ec2.internal status is now: NodeHasNoDiskPressure
+  Normal   RegisteredNode           5m53s                node-controller  Node ip-10-0-0-168.ec2.internal event: Registered Node ip-10-0-0-168.ec2.internal in Controller
+  Normal   RegisteredNode           4m40s                node-controller  Node ip-10-0-0-168.ec2.internal event: Registered Node ip-10-0-0-168.ec2.internal in Controller
+  Normal   RegisteredNode           2m9s                 node-controller  Node ip-10-0-0-168.ec2.internal event: Registered Node ip-10-0-0-168.ec2.internal in Controller
+  Normal   RegisteredNode           41s                  node-controller  Node ip-10-0-0-168.ec2.internal event: Registered Node ip-10-0-0-168.ec2.internal in Controller
