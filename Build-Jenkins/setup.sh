@@ -4,7 +4,7 @@
 kubectl create namespace management-ns
 
 # create the yaml required to make a POD with jenkins running in it
-kubectl run jenkins-app --image=jenkins:lts --port=8080 --dry-run=client -n management-ns -o yaml > deploy.yaml
+kubectl run jenkins-app --image=jenkins/jenkins:lts-jdk11 --port=8080 --dry-run=client -n management-ns -o yaml > deploy.yaml
 
 kubectl apply -f deploy.yaml -n management-ns
 
