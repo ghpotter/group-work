@@ -21,9 +21,15 @@ pipeline {
             steps {
                 echo 'Deploying....'
                 // starting app
-                sh 'python microhttp'
+                //sh 'python microhttp'
 
+                // requires connecting kubectl to the cluster
 
+                sh 'sudo docker image pull ${dockerImage}'
+
+                sh 'kubectl create namespace appspace'
+
+                sh 'kubectl run py-app --image=${dockerImage} --port=8080 -n appspace'
 
             }
         }
