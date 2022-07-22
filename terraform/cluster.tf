@@ -1,9 +1,10 @@
 resource "aws_launch_configuration" "ecs_launch_config" {
-    image_id             = "ami-0cff7528ff583bf9a"
-    iam_instance_profile = aws_iam_instance_profile.ecs_agent.name
-    security_groups      = [aws_security_group.terraform_access.id]
-    user_data            = "#!/bin/bash\necho ECS_CLUSTER=my-cluster >> /etc/ecs/ecs.config"
-    instance_type        = "t2.medium"
+    image_id                    = "ami-0cff7528ff583bf9a"
+    iam_instance_profile        = aws_iam_instance_profile.ecs_agent.name
+    security_groups             = [aws_security_group.terraform_access.id]
+    user_data                   = "#!/bin/bash\necho ECS_CLUSTER=my-cluster >> /etc/ecs/ecs.config"
+    associate_public_ip_address = "true"
+    instance_type               = "t2.medium"
 }
 
 resource "aws_autoscaling_group" "failure_analysis_ecs_asg" {
