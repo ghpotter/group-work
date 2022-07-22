@@ -17,6 +17,8 @@ good - terraform creation works
 
 good - jenkins is running
 
+good - application created and works in container
+
 pending - pipeline issues because of kubectl version issues
 
 pending - issues with creating nodes
