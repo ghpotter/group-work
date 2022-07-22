@@ -2,7 +2,8 @@
 pipeline {
 
     environment {
-        dockerImage = "ghpotter/group-work" // docker image name
+        dockerImage = "group-work" // docker image name
+        pullFrom = "ghpotter"
     }
 
 
@@ -31,11 +32,16 @@ pipeline {
 
                 // requires connecting kubectl to the cluster
 
-                sh 'sudo docker image pull ${dockerImage}'
+                sh 'sudo docker image pull ${pullFrom}/${dockerImage}'
 
                 sh 'kubectl create namespace appspace'
 
                 sh 'kubectl run py-app --image=${dockerImage} --port=8080 -n appspace'
+
+
+                // Create a service
+                // Make the service visible
+                sh 'kubectl port-forward service/${dockerImage} 8080:8080'
 
             }
         }
