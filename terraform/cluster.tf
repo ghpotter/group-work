@@ -5,6 +5,7 @@ resource "aws_launch_configuration" "ecs_launch_config" {
     user_data                   = "#!/bin/bash\necho ECS_CLUSTER=my-cluster >> /etc/ecs/ecs.config"
     associate_public_ip_address = "true"
     instance_type               = "t2.medium"
+    key_name                    = "rd-key"
 }
 
 resource "aws_autoscaling_group" "failure_analysis_ecs_asg" {
