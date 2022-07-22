@@ -22,6 +22,9 @@ pipeline {
                 echo 'Deploying....'
                 // starting app
                 sh 'python microhttp'
+
+
+
             }
         }
     }
