@@ -50,3 +50,25 @@ export PATH=/usr/local/bin:$PATH
 # Make sure to specify the correct cluster name and the region
 
 aws eks --region us-east-1 update-kubeconfig --name Cluster-Name
+
+
+
+
+
+Then log in to docker and install the docker and docker pipeline plugins
+
+
+
+# If there are issues with the use of kubectl try this
+
+rm ~/.kube/config
+
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install --update
+
+aws eks --region us-east-1 update-kubeconfig --name Cluster-Name
+
+
+
+ 
