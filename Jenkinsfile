@@ -1,5 +1,11 @@
 
 pipeline {
+
+    environment {
+        dockerImage = "ghpotter/group-work" // docker image name
+    }
+
+
     agent {
         docker {image 'ghpotter/group-work'}
     }
